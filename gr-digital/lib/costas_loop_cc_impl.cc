@@ -4,20 +4,8 @@
  *
  * This file is part of GNU Radio
  *
- * GNU Radio is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3, or (at your option)
- * any later version.
+ * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * GNU Radio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with GNU Radio; see the file COPYING.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street,
- * Boston, MA 02110-1301, USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -47,7 +35,6 @@ costas_loop_cc_impl::costas_loop_cc_impl(float loop_bw, unsigned int order, bool
                  io_signature::make(1, 1, sizeof(gr_complex)),
                  io_signature::makev(1, 4, iosig)),
       blocks::control_loop(loop_bw, 1.0, -1.0),
-      d_order(order),
       d_error(0),
       d_noise(1.0),
       d_phase_detector(choose_phase_detector(order, use_snr))

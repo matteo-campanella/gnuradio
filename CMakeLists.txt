@@ -2,20 +2,8 @@
 #
 # This file is part of GNU Radio
 #
-# GNU Radio is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3, or (at your option)
-# any later version.
+# SPDX-License-Identifier: GPL-3.0-or-later
 #
-# GNU Radio is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with GNU Radio; see the file COPYING.  If not, write to
-# the Free Software Foundation, Inc., 51 Franklin Street,
-# Boston, MA 02110-1301, USA.
 
 ########################################################################
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -447,6 +435,14 @@ message(STATUS "  Override with -DENABLE_INTERNAL_VOLK=ON/OFF")
 
 # Handle logging
 find_package(LOG4CPP REQUIRED)
+
+########################################################################
+# Disable complex math NaN/INFO range checking for performance
+########################################################################
+check_cxx_compiler_flag(-fcx-limited-range HAVE_CX_LIMITED_RANGE)
+if(HAVE_CX_LIMITED_RANGE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcx-limited-range")
+endif(HAVE_CX_LIMITED_RANGE)
 
 ########################################################################
 # Distribute the README file

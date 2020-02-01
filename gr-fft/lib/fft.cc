@@ -4,20 +4,8 @@
  *
  * This file is part of GNU Radio
  *
- * GNU Radio is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3, or (at your option)
- * any later version.
+ * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * GNU Radio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with GNU Radio; see the file COPYING.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street,
- * Boston, MA 02110-1301, USA.
  */
 
 #include <gnuradio/fft/fft.h>
@@ -156,7 +144,7 @@ static void export_wisdom()
 // ----------------------------------------------------------------
 
 fft_complex::fft_complex(int fft_size, bool forward, int nthreads)
-    : d_fft_size(fft_size), d_nthreads(nthreads), d_inbuf(fft_size), d_outbuf(fft_size)
+    : d_nthreads(nthreads), d_inbuf(fft_size), d_outbuf(fft_size)
 {
     // Hold global mutex during plan construction and destruction.
     planner::scoped_lock lock(planner::mutex());
@@ -211,10 +199,7 @@ void fft_complex::execute() { fftwf_execute((fftwf_plan)d_plan); }
 // ----------------------------------------------------------------
 
 fft_real_fwd::fft_real_fwd(int fft_size, int nthreads)
-    : d_fft_size(fft_size),
-      d_nthreads(nthreads),
-      d_inbuf(fft_size),
-      d_outbuf(fft_size / 2 + 1)
+    : d_nthreads(nthreads), d_inbuf(fft_size), d_outbuf(fft_size / 2 + 1)
 {
     // Hold global mutex during plan construction and destruction.
     planner::scoped_lock lock(planner::mutex());
@@ -269,10 +254,7 @@ void fft_real_fwd::execute() { fftwf_execute((fftwf_plan)d_plan); }
 // ----------------------------------------------------------------
 
 fft_real_rev::fft_real_rev(int fft_size, int nthreads)
-    : d_fft_size(fft_size),
-      d_nthreads(nthreads),
-      d_inbuf(fft_size / 2 + 1),
-      d_outbuf(fft_size)
+    : d_nthreads(nthreads), d_inbuf(fft_size / 2 + 1), d_outbuf(fft_size)
 {
     // Hold global mutex during plan construction and destruction.
     planner::scoped_lock lock(planner::mutex());
